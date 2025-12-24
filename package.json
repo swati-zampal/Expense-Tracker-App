@@ -1,0 +1,21 @@
+{
+  "name": "expense-tracker-mysql",
+  "version": "1.0.0",
+  "description": "Node.js Expense Tracker using Express and MySQL",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Swati Zampal",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "ejs": "^3.1.10",
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
+

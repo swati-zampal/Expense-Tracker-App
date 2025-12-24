@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 60%;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    form input,
+    form select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    form button {
+      grid-column: span 2;
+      padding: 10px;
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background: #219150;
+    }
+
+    hr {
+      margin: 25px 0;
+    }
+
+    h3 {
+      color: #34495e;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .expense-info {
+      flex: 1;
+    }
+
+    .delete-form button {
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-form button:hover {
+      background: #c0392b;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
+      color: #2c3e50;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 90%;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      form button {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>💰 Expense Tracker </h2>
+
+    <form action="/add" method="POST">
+      <input type="text" name="title" placeholder="Expense title" required>
+
+      <select name="category" required>
+        <option value="">Select Category</option>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Shopping</option>
+        <option>Bills</option>
+        <option>Entertainment</option>
+        <option>Other</option>
+      </select>
+
+      <input type="number" name="amount" placeholder="Amount" required>
+
+      <select name="payment_mode" required>
+        <option value="">Payment Mode</option>
+        <option>Cash</option>
+        <option>UPI</option>
+        <option>Card</option>
+        <option>Net Banking</option>
+      </select>
+
+      <input type="date" name="expense_date" required>
+
+      <input type="text" name="notes" placeholder="Notes (optional)">
+
+      <button>Add Expense</button>
+    </form>
+
+    <hr>
+
+    <h3>Expense List</h3>
+    <ul>
+      <% expenses.forEach(e => { %>
+        <li>
+          <div class="expense-info">
+            <strong><%= e.title %></strong> |
+            <%= e.category %> |
+            ₹<%= e.amount %> |
+            <%= e.payment_mode %> |
+            <%= e.expense_date.toISOString().slice(0,10) %>
+          </div>
+
+          <form action="/delete/<%= e.id %>" method="POST" class="delete-form">
+            <button>❌</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+
+    <div class="total">
+      Total Expense: ₹<%= total %>
+    </div>
+  </div>
+</body>
+</html>
+
